@@ -1,7 +1,7 @@
 # Mastering Bitcoin Seminar
 
 Welcome to the Masterng Bitcoin Seminar promoted by Vinteum. This is a 6-week
-<!-- 4-week --> seminar in which we dive deep into the foundational concepts of
+seminar in which we dive deep into the foundational concepts of
 the Bitcoin protocol as covered in the book [Mastering
 Bitcoin](https://github.com/bitcoinbook/bitcoinbook) by Andreas Antonopoulos and
 David Harding. This cohort is designed for anyone looking to gain a thorough
@@ -38,8 +38,9 @@ the comments of others, thinking critically for themselves, and articulate their
 own thoughts and responses to the thoughts of others. They learn to work
 cooperatively and to question intelligently and civilly.
 
-The main discussions happen at the weekly meetings, but the [Discord channel]() will
-also be available for inquiries and discussions between peers.
+The main discussions happen at the weekly meetings, but the [Discord
+channel](https://discord.gg/N5RAvC8Zqk) will also be available for inquiries and
+discussions between peers.
 
 ## Syllabus
 
@@ -76,7 +77,7 @@ You'll receive an email with further registration instructions.
 
 - [Mastering Bitcoin Book (open source version)](https://github.com/bitcoinbook/bitcoinbook)
 - [Mastering Bitcoin Book (physical version)](https://a.co/d/4UNf4jo)
-- [Vinteum Discord]()
+- [Vinteum Discord](https://discord.gg/N5RAvC8Zqk)
 
 ## Contact
 
