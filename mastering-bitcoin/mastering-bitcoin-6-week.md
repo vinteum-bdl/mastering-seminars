@@ -1,3 +1,14 @@
+# Mastering Bitcoin Seminar: 6-week format
+
+| Week | Reading         | Topics                                                               |
+|------|-----------------|----------------------------------------------------------------------|
+| 1    | Chapters 1 to 4 | Why Bitcoin, System's Architecture, Bitcoin Core, Keys and Addresses |
+| 2    | Chapters 5, 6   | HD Wallets and Transactions                                          |
+| 3    | Chapters 7, 8   | Script and Digital Signatures                                        |
+| 4    | Chapters 9, 10  | Fees, network                                                        |
+| 5    | Chapters 11, 12 | Blockchain, Mining and Consensus                                     |
+| 6    | Chapters 13, 14 | Security Model and Lightning Network                                 |
+
 ### Week 1: Why Bitcoin, System's Architecture, Bitcoin Core, Keys and Addresses
 
 #### Reading
