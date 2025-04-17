@@ -40,7 +40,3 @@ You'll receive an email with further registration instructions.
 - [Mastering the Lightning Network Book (open source version)](https://github.com/lnbook/lnbook)
 - [Mastering the Lightniong Network Book (physical version)](https://a.co/d/8gTqytB)
 - [Vinteum Discord](https://discord.gg/N5RAvC8Zqk)
-
-## Contact
-
-For any queries, please contact us at [EMAIL]().
