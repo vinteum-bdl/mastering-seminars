@@ -1,125 +1,123 @@
-# Mastering the Lightnin Network Seminar: 7-week format
+# Mastering the Lightning Network Seminar
 
-## Resources
+## 1. Seminar Purpose and Methodology
 
-- [Mastering the Lightning Network Book (open source version)](https://github.com/lnbook/lnbook)
-- [Mastering the Lightniong Network Book (physical version)](https://a.co/d/8gTqytB)
+Welcome to the **Mastering the Lightning Network Seminar**, an in-depth journey into the core concepts that underpin Bitcoin's second layer.
 
-## Syllabus 
+### 🔹 Purpose
 
-| Week | Reading                   | Topics                                                       |
-|------|---------------------------|--------------------------------------------------------------|
-| 1    | Appendix A, Chapters 2, 3 | Bitcoin Fundamentals Review, How the Lightning Network Works |
-| 2    | Chapters 6, 7             | Network Architecture and Payment Channels                    |
-| 3    | Chapters 8, 9             | Routing and Payment Forwarding                               |
-| 4    | Chapters 10               | Onion Routing                                                |
-| 5    | Chapters 11, 12           | Gossip, the Channel Graph, Pathfinding                       |
-| 6    | Chapters 15               | Lightning Payment Requests                                   |
-| 7    | Chapters 16               | Security and Privacy                                         |
+This seminar is designed for:
 
-### Week 1
+- Developers aiming to build on Bitcoin and Lightning.
+- Technically inclined professionals, investors, and researchers.
+- Anyone motivated to understand the Lightning Network at a protocol level — beyond surface-level metaphors.
 
-Appendix A: Bitcoin Fundamentals Review
+### 📈 Methodology
 
-1. What's an UTXO?
-2. What are locking and unlocking scripts? Where are they present in the Bitcoin transactions?
-3. What's locking an UTXO to a secret? How are hashes used to achieve this?
-4. What kinds of time locking mechanisms are available in Bitcoin transactions?
-5. How can someone unlock the script shown in Example A-1? (This is quite hard to understand now, try your best).
+The seminar follows a **two-pronged learning path**:
 
-Chapter 2: Getting Started
+- **Self-Study Guided by Critical Questions** 📖
 
-1. What are the functions a Lightning Wallet has to perform? How they differ from a Bitcoin wallet? Does the term wallet accurately describe the set of functions users needs? How could using this term be helpful or confusing for a new lightning user?
-2. What do I have to do to join the Lightning Network and make and receive payments?
-3. "Lightning is not a separate token or coin, it is Bitcoin." One of the loudest critiques of lightning is that this is NOT true. Can you articulate why they think that lightning is not bitcoin?
+  The self-study phase is the core of the learning journey.
+  Understanding the Lightning Network requires grappling with many technical details and layered concepts — there is no shortcut or delegation possible. 📚
 
-Chapter 3: How the Lightning Network Works
+  The readings and self-study questions are designed to help participants engage directly with the protocol’s mechanics and nuances.
+  While the Socratic sessions distill the conceptual heart of Lightning, it is during self-study that the technical depth and rich structure of the network become fully accessible.
 
-1. Describe the Lightning Network in terms of channels. What is needed to set up a "Lightning Network?" Is there only one Lightning Network?
-2. Which parts of the Lightning Network are public? Which parts are private? How could we improve the privacy?
-3. What data must a Lightning Network node keep in order to route payments and protect itself against loss of funds? As a node operator, how does this scale?
-4. Why is revoking a transaction in bitcoin tricky? Why can't we simply invalidate older channel states?
-5. Describe the differences between a bitcoin address and a Lightning Network payment invoice. What are the security assumptions of the invoice?
+  Approach this phase as an intellectual workout: the more effort you invest, the more solid your understanding will become.
 
-### Week 2
+  - Each week, participants study assigned readings and reflect on deep, nontrivial questions.
+  - The questions are designed to guide critical reading, encourage active engagement, and stimulate further research.
 
-Chapter 6: Lightning Network Architecture
+- **Socratic Seminar Sessions** 💬
 
-1. How important are each of the different network protocol layers? Is it possible to choose to implement some of them differently, whilst remaining compatible with the wider lightning network?
-2. How does the Lightning Network layered architecture approach compare to that of the internet? What are some of the benefits of a layered architecture in general networks?
-3. Looking at the network connection layer in the diagram, why would we need all the different types of network I/O protocols?
+  The Socratic sessions are designed to **distill conceptual understanding**, not to review technical minutiae.
+  Discussions will often seem intellectually challenging — and at times, they might even feel disconnected from the specific wording or structure of the readings.
+  This is intentional.
 
-Chapter 7: Payment Channels
+  The goal is to build **an internal model of the Lightning Network**, grounded directly in Bitcoin’s primitives, without relying on surface-level analogies or metaphors. 🧠✨
 
-1. Considering how transactions work in the Bitcoin Protocol, what's a payment channel? What information does it keep track of?
-2. What are the step to open a channel? Which transactions have to be created or signed?
-3. Considering how transactions work in the Bitcoin protocol, what does it mean to send a payment accross a lightning channel?
-4. The commitment transactions are "asymmetric". What does that mean, and why is that the case?
-5. Why can't we keep the funding transaction off-chain until we close the channel?
-6. What's the channel state and how peers keep track of it?
-7. How peers cooperatively close the payment channel?
-8. What happens if one node in the channel tries to unilaterally close the channel whilst there is a payment (HTLC) in-flight which has not been settled?
+  Through active participation, critical questioning, and collaborative exploration, students will reach a **deeper and more robust comprehension** of the protocol.
 
-### Week 3
+  Mentors will facilitate discussions and clarify directions when needed, but **they are not lecturers** or single sources of truth.
+  True understanding emerges from active engagement, not passive listening.
 
-Chapter 8: Routing on a Network of Payment Channels
+  - Weekly synchronous sessions where participants discuss concepts through guided Socratic questioning.
+  - Each participant is assigned a critical question to answer and debate with peers, helping distill essential concepts collectively.
 
-1 .What is the difference between routing and pathfinding? Who is responsible for these actions? Which one is part of LN's scaling model?
-2. How payments are routed in the lightning network?
-3. What's a HTLC? How does it ensure fairness in the protocol?
-4. Explain the logic of the HTLC script shown in Example 8-1.
-5. Alice pays Dylan through Bob and Carole. (A -> B -> C -> D). What happens if Carole reaches out to Alice and tells her the payment preimage that she received from Dylan, before telling Bob? In fact, why would she even tell Bob the preimage at all?
-6. What's signature binding of HTLCs? Why do we need it?
+The goal is to foster **independent reasoning** and **conceptual mastery**, not passive information consumption.
 
-Chapter 9: Channel Operation and Payment Forwarding
+---
 
-1. Why do we use HTLCs in local payments even if we are not routing?
-2. What are the steps to make a local payment using HTLCs?
-3. Alice and Bob have an in-flight HTLC which has timed out (expired). Alice would like to remove the HTLC from the channel, however Bob has gone offline. Is Alice in any danger? What action if any should she take?
-4. What are all the ways in which an HTLC output script can be spent? If Alice sent the HTLC to Bob, who is able to spend which paths?
-5. If Alice funded the channel between her and Bob, is Alice able to send HTLCs to Bob, and is Bob able to send HTLCs to Alice?
+## 2. Weekly Flow
 
-### Week 4
+Each week, participants will:
 
-Chapter 10: Onion Routing
+- 📙 **Read** the assigned Core Readings.
+- 🔍 **Reflect** on the Self-Study Questions.
+- 💬 **Participate** actively in the Socratic Seminar Session.
 
-1. What's source based routing and how does it differ from the usual packet switching used in the Internet?
-2. What's the principle behind onion routing? Which and how criptographic primitives are used to ensure it will perform as expected?
-3. How to ensure that each hop will not be able to figure out its place in the route?
-4. How each hop can access the information it requires to perform its job?
-5. What's a keysend payment? How does it work?
+Optional readings are suggested for those who want to dive deeper into technical or emerging topics.
 
-### Week 5
+---
 
-Chapter 11: Gossip and the Channel Graph
+## 3. Seminar Schedule Table
 
-1. How does a lightning node discovers peers using BOLT11?
-2. What's the channel graph? Why lightning nodes have to build one?
-3. What messages constitute the gossip protocol in the lightning network?
+_The "Conceptual Focus" column below shows the main concept distilled during the Socratic sessions, while the "Core Reading" assignments provide the technical foundation for broader context and self-study._
 
-Chapter 12: Pathfinding and Payment Delivery
+| Week | Conceptual Focus                                     | Core Reading          | Optional Reading                         |
+| ---- | ---------------------------------------------------- | --------------------- | ---------------------------------------- |
+| 1    | Bitcoin as Contract Language                         | Appendix A, Ch 2-3    | None                                     |
+| 2    | Channels as Collections of Bitcoin Transactions      | Ch 6-7                | Skim network stack details               |
+| 3    | Payments within the channel and channel state update | Ch 8-9                | Skim detailed script examples            |
+| 4    | Routing Payments                                     | Ch 10                 | Keysend payments (optional)              |
+| 5    | Pathfinding, Gossip, Liquidity                       | Ch 11-12              | Liquidity probing techniques             |
+| 6    | Deep Dive into Privacy                               | Ch 10 (privacy focus) | Blinded paths, rendezvous routing        |
+| 7    | Challenges and Future Directions                     | Ch 15-16              | PTLCs, blinded paths, trampoline routing |
 
-1. Not only successful, but also failed payment attempts can be used to gather information on the liquidity ranges of channels. Can this be abused to surveil channel balances, and what cost does the attacker incur?
-2. What are the benefits and downsides of using source-based onion routing in LN, as compared to destination-based routing?
-3. What happens when different nodes use different pathfinding algorithms? To what extent do they remain interoperable?
-4. Maintaining a channel graph and performing pathfinding are computationally quite expensive. Could we offload that work to third parties? How would that impact an individual's privacy, security and ability to receive payments?
-5. In which ways does pathfinding rely on messages from the gossip protocol?
+---
 
-### Week 6
+## 4. References
 
-Chapter 15: Lightning Payment Requests
+- **Mastering the Lightning Network** by Andreas M. Antonopoulos, Olaoluwa Osuntokun, and Rene Pickhardt ([Open Source Version](https://github.com/lnbook/lnbook))
+- **Bitcoin Lightning Network Specifications** ([BOLTs](https://github.com/lightning/bolts))
+- Academic papers and community research proposals (for advanced optional reading)
+- Community blogs and dev mailing list discussions (optional enrichment)
 
-1. Why can't we need invoices and can't use static payment addresses like in the Bitcoin base layer?
-2. Alice (A) paid Carole (C) through Bob (B) (A->B->C). What happens when she makes the same payment again, with the same route and the same payment hash? What happens when instead of routing through Bob, she routes through Dylan (A->D->C)?
-3. BOLT11 invoices cannot be safely reused. Why is this not true for Bitcoin (L1) addresses, ignoring the privacy implications?
-4. Each invoice is signed with "[a] signature [that] allows the sender to verify that the payment request was indeed created by the destination of the payment." Why is this necessary? Why would anyone create an invoice that does not pay to their own node?
-5. As per BOLT8, all communication on the Lightning Network is encrypted. Could BOLT11 invoices also be encrypted, and why are they not? Is that a security threat?
+---
 
-### Week 7
+## 5. Practical Information
 
-Chapter 16: Security and Privacy of the Lightning Network
+### 💬 Platform
 
-1. What does it mean to de-anonymize someone? What's the anonymity set?
-2. How the base layer and the lightning network differ in terms of privacy?
-3. What kind of attacks are possible in the lightning network? Can any be used to steal bitcoin from lightning nodes?
+- Main discussions happen through weekly live sessions.
+- Asynchronous communication and questions via [Discord Server Link]().
 
+### 🔎 Participation Expectations
+
+- Dedicate a few hours weekly for reading and reflection.
+- Prepare answers to the assigned critical questions.
+- Engage respectfully and thoughtfully during the weekly sessions.
+
+### 🧑‍💻 Mentor Support
+
+- Mentors will be available to facilitate discussions and provide technical clarifications.
+
+---
+
+## 7. Learning Outcomes
+
+By the end of this seminar, participants will:
+
+- 🔍 Understand Lightning as a Bitcoin-native protocol, not "magic money" or a separate token.
+- 🔹 Explain payment channels, updates, and routing mechanisms in terms of the Bitcoin protocol primitives.
+- 🔏 Evaluate security, privacy, and scalability tradeoffs that arise from the design of the Lightning Network.
+- 📚 Engage critically with current research and future protocol proposals.
+
+---
+
+## 8. Invitation to the Future
+
+Lightning is still evolving. This seminar is not only about learning — it's about preparing to **contribute** to the future of Bitcoin’s scalability and decentralization.
+
+Let's build it together. 🚀
