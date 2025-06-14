@@ -1,48 +1,64 @@
-## Week 1 — Bitcoin as a Contract Language
+# 📚 Week 1 – Bitcoin as a Language for Financial Contracts
 
-### 🔹 1. Introduction
+A Bitcoin transaction is used to communicate a payment from one person to another.
+Every payment on Bitcoin begins with the creation of a transaction that expresses who is paying, how much is being paid, and under which conditions that payment can be claimed.
+In other words, **Bitcoin transactions are programmable contracts**, not just simple messages to transfer value.
 
-_This week we start by understanding the foundation of Bitcoin and why transactions are better thought of as programmable contracts rather than simple payments. We also introduce the Lightning Network at a high level and prepare to see it as a system grounded in Bitcoin’s transaction model._
+These transactions are validated by all participants in the network and, once confirmed by being included in a block, the payment is considered final.
+This global validation process means that, even in a payment between just two people, the entire network is involved.
+That’s a design feature — Bitcoin’s model assumes that no one is to be trusted, so everyone verifies everything.
 
-_Focus on the **concepts of UTXOs, scripts, and Bitcoin as a contract language**. Don’t worry yet about full technical mastery — aim for clear mental models._
+But this comes at a cost.
+When the whole network is involved, there’s friction: time spent waiting for confirmation, and fees paid to incentivize inclusion in a block.
+These constraints — latency and cost — are direct consequences of Bitcoin’s global trustless model.
 
----
+This is the starting point for our journey.
+The Lightning protocol is a particular way we use the Bitcoin protocol under additional trust assumptions we are going to discuss in the following weeks.
+To understand the Lightning Network, we must first understand the structure and flow of Bitcoin payments on the base layer, and how these design choices create both security and scalability challenges.
 
-### 📙 2. Core Reading Assignment
-
-- **Appendix A**: Bitcoin Fundamentals Review
-- **Chapter 2**: Getting Started
-- **Chapter 3**: How the Lightning Network Works
-
----
-
-### 📈 3. Optional Reading Assignment
-
-- _None for this week._
-  (All assigned reading is important for grounding.)
+Focus on the **concepts of UTXOs, scripts, and Bitcoin as a contract language**.
 
 ---
 
-### 🔍 4. Self-Study Questions
+### 📙 Core Reading Assignment
 
-#### Appendix A: Bitcoin Fundamentals Review
+You might be tempted to think you already understand how Bitcoin works and skip this week's readings.
+Trust me, you probably don't understand Bitcoin transactions well enough to understand the Lightning protocol.
+I dare say 80% of Lightning is dealing with Bitcoin transactions.
+There's no way to understand it without becoming fluent in the language of Bitcoin transactions.
 
-1. **Define a UTXO and explain why it's fundamental to Bitcoin's model.**
-2. **Describe locking and unlocking scripts and explain their role within Bitcoin transactions.**
-3. **How can a UTXO be locked to a secret? Why are cryptographic hashes important for this technique?**
-4. **What kinds of time locking mechanisms exist (absolute and relative) and how are they used?**
-5. **Analyze Example A-1. What data must be provided to satisfy the conditions of the script?**
+1. Antonopoulos et al, [Mastering the Lightning Network](https://github.com/lnbook/lnbook) -  **Appendix A**: Bitcoin Fundamentals Review.
 
-#### Chapter 2: Getting Started
+2. Antonoupolos, [Mastering Bitcoin](https://github.com/bitcoinbook/bitcoinbook) - **Chapter 6**: Transactions and **Chapter 7**: Authorization and Authentication.
 
-1. **Analyze the functions a Lightning wallet must perform. How does it differ from a Bitcoin wallet? In what ways is the term "wallet" helpful or misleading for new users?**
-2. **List and explain the steps needed to join the Lightning Network and start making and receiving payments. Which steps depend on Bitcoin layer actions?**
-3. **Some critics argue Lightning is not truly Bitcoin. What are their arguments? How does understanding the protocol help you evaluate this claim?**
+3. James Prestwich, [Bitcoin’s Time Locks](https://medium.com/summa-technology/bitcoins-time-locks-27e0c362d7a1).
 
-#### Chapter 3: How the Lightning Network Works
+4. Antonopoulos et al, [Mastering the Lightning Network](https://github.com/lnbook/lnbook) - Chapter 3**: How the Lightning Network Works
 
-1. **Describe the Lightning Network as a system of payment channels. What elements are required to build a functioning Lightning Network? Is there a single global Lightning Network?**
-2. **Which aspects of Lightning are publicly visible and which are private? Suggest ways privacy could be improved.**
-3. **What data must a Lightning node maintain to operate safely and route payments? How does this burden change as the network grows?**
-4. **Why is it difficult to revoke an old Bitcoin transaction? Why can't Lightning channels simply invalidate old channel states?**
-5. **Compare a Bitcoin address and a Lightning Network payment invoice. What different security assumptions underlie each method?**
+4. Christian Decker, [Lightning ≈ Bitcoin](https://youtu.be/8lMLo-7yF5k?si=YxvVLKmz8zFoj0yU)
+
+---
+
+### 📈 Optional Reading Assignment
+
+- Poon and Dryja, [The Bitcoin Lightning Network: Scalable Oﬀ-Chain Instant Payments](https://lightning.network/lightning-network-paper.pdf).
+
+The academic paper that introduced the idea of the Lightning Network, if you are feeling adventurous.
+On the first reading, note that all they are talking about are Bitcoin transactions and specific contracts (`scriptPubkey`s). 
+
+- Curiousinventor - [Bitcoin Lightning Network Explained: How it Actually Works](https://www.youtube.com/watch?v=yKdK-7AtAMQ&list=PLUr_dJkzOLr83CRbuevW4I5CpFFth5Cbm&index=6)
+
+- Curiousinventor - [Bitcoin Lightning Transactions & Protocol Deep Dive](https://www.youtube.com/watch?v=to8XItlplac)
+
+---
+
+### 🔍 Self-Study Questions
+
+1. What are the parts of a Bitcoin transaction?
+2. What's an UTXO? Why it's fundamental to Bitcoin's model?
+3. Describe locking and unlocking scripts and explain their role within Bitcoin transactions.
+4. Suppose someone created a transaction with a 1 BTYC output locked by a p2pkh constract. Who's the owner of this 1 BTC? What data he must present to spend his 1 BTC?
+4. Describe a 2-of-2 multisig contract (locking script) using Bitcoin Script. Describe the spending script for this contract.
+5. How can an UTXO be locked to a secret? Why are cryptographic hashes used for this technique?
+6. What kinds of time locking mechanisms exist (absolute and relative) and how are they used?
+7. Example A-1 of the Mastering the Lightning Network book shows an example of a conditional contract, i.e., a contract with different spending paths. How many conditions there are in this contract? What data must be provided to satisfy the conditions of each spending path in this contract?
