@@ -88,4 +88,4 @@ This week we are not intereted in how the channel state is updated.
 15. What are the implications and costs of a "force close" compared to a "mutual close"?
 16. Ideally, you only see two on-chain transactions over the lifetime of a payment channel, one to open the channel and one to close it. How does this reflect the efficiency goal of payment channels?
 
-When answering these quesitons, focus on how to construct valid Bitcoin transactions and which information is needed by each party.
+When answering these questions, focus on how to construct valid Bitcoin transactions and which information is needed by each party.
