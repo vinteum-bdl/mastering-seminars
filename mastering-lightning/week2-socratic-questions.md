@@ -4,11 +4,12 @@ This week we are focusing on opening and closing payment channels.
 In asnwering the following questions, focus on the Bitcoin transactions Alice and 
 Bob would have to build and what should they do to them (propagate to the network or keep off-chain on their private records).
 Try to build the simplest solution to solve the most immediate problem posed.
+There is no need for revocation keys or HTLCs for now, these are important security mechanisms we will introduce once we analyze the problems that arise from using the primitives we will build here.
 This solution will not work on the real-world, but let complexity increase when complexity is needed.
 
 ### Question 1
 
-> **Alice and Bob want to open a payment channel.
+> **Alice and Bob make frequent payments among each other, so they decide to open a payment channel.
 > Alice contributes 1000 sats and Bob 2000 sats.
 > To simplify, suppose Alice has a 1000 sats UTXO and Bob has a 2000 sats UTXO available.
 > What kind of Bitcoin transaction do they need to build and broadcast to set up the channel?**

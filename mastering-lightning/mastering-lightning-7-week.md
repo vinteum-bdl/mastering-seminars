@@ -9,7 +9,6 @@ Think of this as learning the intricate mechanics of self-combustion engines and
 You don't have to know them to learn how to drive a car.
 But if you put the time and effort to master the concepts behind the black box, you not only become a better driver, you give the first step to design better cars in the future.
 That's what we want, more people engaged in protocol design for secure scalable Bitcoin payments.
-
 Developing this kind of understanding is hard.
 If you rely on analogies and metaphors (e.g., "it's like a bar tab" or "it's like TCP over Bitcoin"), you'll likely end up with an intuitive but fragile grasp of how Lightning works.
 On the other hand, you could take a super concrete approach and dive directly into the codebases of real-world Lightning node implementations — but you'll quickly encounter overwhelming complexity.
