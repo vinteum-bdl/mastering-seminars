@@ -1,52 +1,109 @@
-# 📚 Week 3 – Socratic Questions
-**Theme:** Updating a Channel Means Replacing Commitment Transactions
+# 📚 Week 3 — Making Payments Using a Channel
+
+Let’s recap the scenario from last week.
+Alice and Bob opened a payment channel.
+Alice contributed to the channel with a 1000 sats UTXO and Bob with a 2000 sats UTXO.
+They built a funding transaction that spends each party's UTXO and locks the 3000 sats into a single output with a 2-of-2 multisig contract.
+At the same time, they also built and signed a commitment transaction that spends the 2-of-2 multisig output.
+This commitment transaction has two outputs: one paying 1000 sats to Alice and another paying 2000 sats to Bob.
+
+Alice and Bob both hold a copy of the same commitment transaction.
+We are going to change that today.
+Again, we urge you to try to build the simplest solution given the problem at hand.
+Today we will introduce timelocks and the punishment mechanism of Lightning.
+We don't need revocation keys or HTLCs for now; they’ll appear next week.
 
 ### Question 1
-> **When we say a Lightning payment was made, what changed inside the payment channel?**
+
+> **Alice wants to pay 100 sats to Bob using the payment channel they estblished.
+> For that to happen, they need to update their commitment transaction because its outputs are used to represent the agreed amount each party owns from the multisig UTXO they share.
+> Describe this new commitment transaction.
+> What transactions each of the parties have in hand after they create the payment?**
 
 **Purpose:**
-- Shift student thinking from "sending coins" to "**updating local agreements** (commitments)."
-- Make clear that **no coins "move"** — only agreements change.
+- Establish the notion that making a payment updates the channel state.
+- Reinforce that a new commitment transaction must be created and signed.
 
 **Example of Good Expected Answer:**
-> When a Lightning payment happens inside a channel, no bitcoin moves on the blockchain. What changes is the channel state: the two participants collaboratively create new commitment transactions that reflect the updated balances. These new transactions replace the old ones as the valid view of who owns what, although all previous versions technically still exist until revoked.
+> To pay 100 sats to Bob, Alice and Bob must collaboratively build and sign a new commitment transaction that spends the same funding output, but with new values in the outputs: 900 sats to Alice and 2100 sats to Bob. Each party will now hold a signed transaction representing this updated state.
 
 ### Question 2
-> **Why can't we simply delete the old commitment transactions once a new one is agreed upon?**
+> **Note that Alice and Bob have two pre-signed commitment transaction at hand.
+> Focus on Alice's perspective, now.
+> She has the first commitment transaction paying her 1000 sats and a second transaction paying her 900.
+> How can she use that to steal 100 sats from Bob?
+> In the current state of our design, can Bob do something to stop Alice from stealing him?**
 
 **Purpose:**
-- Highlight **Bitcoin's immutability** — once created and signed, transactions **exist** and can't be "deleted."
-- Set up the revocation mechanism.
+- Confront students with the double-spend risk using outdated state.
+- Reveal the problem of trust without punishment.
 
 **Example of Good Expected Answer:**
-> In Bitcoin, once a transaction is signed, it exists independently and can be broadcast at any time. There’s no way to physically delete it. In Lightning, this means old commitment transactions, even after a balance update, could still theoretically be broadcast by a malicious or mistaken party. Simply creating a new commitment transaction doesn't make the old ones invalid on their own.
+> Alice now holds two valid, signed transactions: one where she has 1000 sats and one with 900.
+> Nothing stops her from broadcasting the older one to reclaim a more favorable balance.
+> In the current protocol, Bob has no defense against this — once the transaction is confirmed, it’s final.
+> This reveals a key flaw: old states must be made unsafe to use.
 
 ### Question 3
-> **What would happen if one party broadcasts an old commitment transaction after a channel balance has changed?**
+> **Our protocol has a serious flaw: Alice can use an old, more favorable, channel state to steal funds from her channel counterparty.
+> Part of the problem is that Alice can use the commitment transaction to immediately receive funds from the shared UTXO.
+> How can we use timelocks in the commitment transaction to ensure she has to wait for some time (say, 2 three days) to claim her funds from the channel?
+> Describe what has to change in the commitment transaction they are going to build and pre-sign.
+> Is that sufficient to stop the stealing from Alice?**
 
 **Purpose:**
-- Make students realize the **fraud risk** inherent in having multiple valid transactions.
-- Drive the necessity of **punishment mechanisms**.
+- Introduce timelocks as a defensive mechanism.
+- Show that delay alone isn't enough to prevent theft.
 
 **Example of Good Expected Answer:**
-> If a party broadcasts an old commitment transaction, they could claim a higher balance than they actually deserve based on the current state. This would effectively allow them to steal funds from their counterparty. Because of this risk, Lightning must include a way to discourage and penalize the use of outdated channel states.
+> Alice’s output in her commitment transaction can be changed to a delayed output using a relative timelock (e.g., OP_CHECKSEQUENCEVERIFY).
+> This means she cannot spend it until 2 days after the transaction is confirmed.
+> This gives Bob time to react, but by itself, it’s not enough — if Bob has no special script to use during this delay, he still can’t recover the funds.
 
 ### Question 4
-> **How does the revocation mechanism discourage cheating in Lightning channels?**
+> **We introduced a delay to Alice when she wants to propagate the commitment transaction to close the channel.
+> In that way, Bob has some time (2 days) to detect it, but right now he can't do anything to stop Alice.
+> That delay means Alice won't be able to create a valid transaction to spend her side of the commitment transaction until some time has passed.
+> What additional modification should we make to the commitment transaction so that Bob can create a valid spending transaction before Alice and reclaim her funds?
+> This will efectivelly create a punishment mechanism: if Alice tries to close the channel with an out of date state, Bob will have some time to reclaim all funds in the channel, making it quite expensive to Alice to even try doing that.**
 
 **Purpose:**
-- Guide students to discover **revocation as a disincentive**.
-- Introduce the **basic revocation key idea** without overwhelming technicalities.
+- Build a mechanism for punishable exits.
 
 **Example of Good Expected Answer:**
-> In Lightning, every time a new commitment transaction is created, the counterparty is given a secret (the revocation key) that would allow them to immediately claim all the funds if an old transaction is broadcast. This creates a strong disincentive to cheat: if you try to publish an outdated transaction, your counterparty can punish you by taking all the funds involved in the channel.
+> We can replace Alice’s delayed output with a special script: Bob can spend it immediately, but Alice has to wait for 2 days to spend.
+> This makes broadcasting old commitments very risky because now the other party can immediately reclaim out funds.
 
 ### Question 5
-> **If commitment transactions are just Bitcoin transactions, how complicated do you expect their scripts to be in order to implement revocation?**
+> **We have created new contracts in the commitment transaction to protect Bob from Alice's attempt to use an old commitment transaction with an out of date channel state.
+> Now consider that Bob can do the same to Alice.
+> We will have to put the same mechanisms in place, but to the other side.
+> Describe the Bob's version of the new commitment transaction.
+> Alice and Bob will each hold a copy of the same pre-signed commitment transaction or they'll have to maintain different version of it?**
 
 **Purpose:**
-- Demystify the technical implementation.
-- Prepare students to see **basic scripts (multisig, timelocks, conditional spending paths)** are enough.
+- Reinforce asymmetry in the design of commitment transactions.
+- Clarify that each party holds a different transaction.
 
 **Example of Good Expected Answer:**
-> Although the behavior seems sophisticated, the scripts used are not very complex. They typically include two spending paths: one for the honest case (standard mutual agreement) and one for the punishment case (allowing the counterparty to claim all funds if a revoked transaction is used). This is accomplished with simple script primitives like multisignature checks, time delays, and secret reveals. Lightning leverages Bitcoin’s existing scripting language cleverly, without needing new opcodes or changes.
+> Alice and Bob must each hold different versions of the commitment transaction.
+> Alice’s version pays her immediately and delays Bob’s output; Bob’s version does the opposite.
+> This ensures that if either party tries to cheat, the counterparty has both time and the ability to claim the funds through the punishment mechanism.
+> The asymmetry is essential to prevent mutual exploitation while still allowing unilateral closure.
+
+### Question 6
+> **The commitment transaction has two outputs, one first belonging to Alice and the seconds belonging to Bob.
+> In Questions 3 and 4, we were trying to prevent Alice from stealing Bob by propagating an old channel state.
+> For that, we modified only Alice's output.
+> Why we didn't need to change Bob's output at all?**
+
+**Purpose:**
+- Identify the exact point of failure in the protocol.
+- Reinforce the design principle of least modification.
+
+**Example of Good Expected Answer:**
+> When Alice propagated her version of the commitment transaction, she is effectively making two payments.
+> One of the outputs pays to her 1000 sats, of which 100 belong to Bob.
+> So, we have to modify this output so that Alice can't that what's not hers.
+> The second output pays 2000 sats to Bob, not to Alice.
+> And since these 2000 sats indeed belong to Bob, they are being paid to their rightfull owner and nothing has to be done about it.
