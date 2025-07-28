@@ -95,7 +95,7 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 > **The commitment transaction has two outputs, the first belonging to Alice and the seconds belonging to Bob.
 > In Questions 3 and 4, we were trying to prevent Alice from stealing Bob by propagating an old channel state.
 > For that, we modified only Alice's output.
-> Why we didn't need to change Bob's output at all?**
+> Why we didn't need to change Bob's output at all, at that point?**
 
 **Purpose:**
 - Identify the exact point of failure in the protocol.
@@ -107,3 +107,20 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 > So, we have to modify this output so that Alice can't that what's not hers.
 > The second output pays 2000 sats to Bob, not to Alice.
 > And since these 2000 sats indeed belong to Bob, they are being paid to their rightfull owner and nothing has to be done about it.
+
+### Question 7
+> **Our protocol still has a subtle but catastrophic vulnerability: Alice can still steal Bob's funds.
+> Can you describe how?**
+
+**Purpose:**
+- Identify the new point of failure in the protocol.
+- Identify the need for additional security mechanisms.
+
+**Example of Good Expected Answer**
+> We saw that if Alice tries to propagate an outdated commitment transaction, Bob can now punish her.
+> Now, after the payment, Alice stops responding Bob's messages, she pretends her node is offline.
+> After a while, Bob will try to close the channel with the last state, a commitment transaction that has two outputs.
+> The first pays 900 sats to Alice now.
+> The second pays 2100 sats to Bob in 2 days or 2100 sats to Alice now.
+> Note that Bob has to wait 2 days to recover his funds because of the security mechanism we put in place to stop him from stealing from Alice by propagating an outdated channel state.
+> When Alice detects this, she can immediately spend the 2100 sats outputs and Bob can do nothing to stop her, after all, it only depends on Alice's signature.
