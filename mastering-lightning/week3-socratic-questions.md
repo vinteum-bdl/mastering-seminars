@@ -15,7 +15,7 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 
 ### Question 1
 
-> **Alice wants to pay 100 sats to Bob using the payment channel they estblished.
+> **Alice wants to pay 100 sats to Bob using the payment channel they established.
 > For that to happen, they need to update their commitment transaction because its outputs are used to represent the agreed amount each party owns from the multisig UTXO they share.
 > Describe this new commitment transaction.
 > What transactions each of the parties have in hand after they create the payment?**
@@ -28,9 +28,9 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 > To pay 100 sats to Bob, Alice and Bob must collaboratively build and sign a new commitment transaction that spends the same funding output, but with new values in the outputs: 900 sats to Alice and 2100 sats to Bob. Each party will now hold a signed transaction representing this updated state.
 
 ### Question 2
-> **Note that Alice and Bob have two pre-signed commitment transaction at hand.
+> **Note that Alice and Bob have two pre-signed commitment transactions at hand.
 > Focus on Alice's perspective, now.
-> She has the first commitment transaction paying her 1000 sats and a second transaction paying her 900.
+> She has the first commitment transaction paying her 1000 sats and a second transaction paying her 900 sats.
 > How can she use that to steal 100 sats from Bob?
 > In the current state of our design, can Bob do something to stop Alice from stealing him?**
 
@@ -79,7 +79,7 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 > Now consider that Bob can do the same to Alice.
 > We will have to put the same mechanisms in place, but to the other side.
 > Describe the Bob's version of the new commitment transaction.
-> Alice and Bob will each hold a copy of the same pre-signed commitment transaction or they'll have to maintain different version of it?**
+> Alice and Bob will each hold a copy of the same pre-signed commitment transaction or they'll have to maintain different versions of it?**
 
 **Purpose:**
 - Reinforce asymmetry in the design of commitment transactions.
@@ -92,7 +92,7 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 > The asymmetry is essential to prevent mutual exploitation while still allowing unilateral closure.
 
 ### Question 6
-> **The commitment transaction has two outputs, one first belonging to Alice and the seconds belonging to Bob.
+> **The commitment transaction has two outputs, the first belonging to Alice and the seconds belonging to Bob.
 > In Questions 3 and 4, we were trying to prevent Alice from stealing Bob by propagating an old channel state.
 > For that, we modified only Alice's output.
 > Why we didn't need to change Bob's output at all?**
