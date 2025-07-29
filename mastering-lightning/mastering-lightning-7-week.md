@@ -43,15 +43,15 @@ The four core questions below cover the basic mechanisms of payment channels:
 Once you understand the basic mechanics of the Lightning protocol, you may wish to explore how it is actually implemented.
 The optional sessions are designed to expand on these ideas and introduce current challenges that protocol designers are working to solve in order to improve the network’s security, reliability, and usability.
 
-| Week | Conceptual Focus                                     |          |
-|------|------------------------------------------------------|----------|
-| 1    | Bitcoin as Contract Language                         | Core     |
-| 2    | Channels as Collections of Bitcoin Transactions      | Core     |
-| 3    | Payments within the channel and channel state update | Core     |
-| 4    | Routing Payments                                     | Core     |
-| 5    | Pathfinding, Gossip, Liquidity                       | Optional |
-| 6    | Deep Dive into Privacy                               | Optional |
-| 7    | Challenges and Future Directions                     | Optional |
+| Week | Conceptual Focus                                                  |          |
+|------|-------------------------------------------------------------------|----------|
+| 1    | Bitcoin as a Language for Financial Contracts                     | Core     |
+| 2    | Lightning Channels as Systems of Bitcoin Transactions             | Core     |
+| 3    | Making Payments Using a Channel                                   | Core     |
+| 4    | Cheating with Valid Transactions and the Need for Revocation Keys | Core     |
+| 5    | Routing Payments Across Independent Channels                      | Core     |
+| 6    | Privacy in the Lightning Network and the Role of Onion Routing    | Optional |
+| 7    | Pathfinding, Gossip, and Liquidity                                | Optional |
 
 ---
 
