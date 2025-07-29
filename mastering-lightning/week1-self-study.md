@@ -46,6 +46,8 @@ There's no way to understand it without becoming fluent in the language of Bitco
 The academic paper that introduced the idea of the Lightning Network, if you are feeling adventurous.
 On the first reading, note that all they are talking about are Bitcoin transactions and specific contracts (`scriptPubkey`s). 
 
+- Christian Decker - [History of the Lightning Network](https://youtu.be/HauP9F16mUM?si=ZeH1dlpTf3vuSZRw)
+
 - Curiousinventor - [Bitcoin Lightning Network Explained: How it Actually Works](https://www.youtube.com/watch?v=yKdK-7AtAMQ&list=PLUr_dJkzOLr83CRbuevW4I5CpFFth5Cbm&index=6)
 
 - Curiousinventor - [Bitcoin Lightning Transactions & Protocol Deep Dive](https://www.youtube.com/watch?v=to8XItlplac)
