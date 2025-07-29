@@ -1,48 +1,102 @@
-# 📚 Week 7 – Socratic Questions
-**Theme:** Current Challenges and Future Directions of Lightning
+# 📚 Week 7 — Pathfinding, Gossip, and Liquidity
 
-### Question 1
-> **If the Lightning Network works well for many payments today, why are developers still working on improvements? What problems remain unsolved?**
+In previous sessions, we learned how to build secure payment channels, route payments using HTLCs, and protect user privacy with onion routing.
 
-**Purpose:**
-- Push students to realize **LN is not "finished"**, and that real-world challenges remain.
+This week, we shift focus to the infrastructure of coordination:
+- How nodes learn about the network,
+- How they decide which route to use,
+- And how liquidity (or lack of it) affects payment reliability.
 
-**Example of Good Expected Answer:**
-> While Lightning enables fast and cheap Bitcoin payments, it still faces important challenges. Managing liquidity efficiently, finding reliable routes, handling mobile and intermittent nodes, improving privacy, making backup and recovery safer, and reducing the burden of maintaining channel graphs are all active areas of development. Each of these challenges affects usability, reliability, and decentralization, and solving them is crucial for broader adoption.
+We’ll reason from first principles about what routing requires in a decentralized setting — and how Lightning solves this problem without centralized coordination or global consensus on balances.
 
-### Question 2
-> **Why is liquidity management such a difficult problem in Lightning?**
-
-**Purpose:**
-- Make students understand **capital inefficiency** and **unbalanced channels** as real operational limitations.
-
-**Example of Good Expected Answer:**
-> In Lightning, payments can only flow if there is sufficient outbound liquidity along a path. Channels can easily become unbalanced over time, where one side has all the funds. Rebalancing requires either routing payments carefully or opening new channels, both of which can be costly and complex. There is no perfect solution yet for dynamically maintaining liquidity where it is needed most without friction or centralization.
-
-### Question 3
-> **If Lightning payments depend on finding good routes, what happens as the network grows larger and more complex?**
+## Question 1
+> **Suppose Alice wants to pay Carol. She doesn't have a direct channel, but she knows Bob does.
+> She also suspects Carol is connected to Dave.
+> How does Alice learn which nodes are connected to whom?
+> Who tells her that these channels exist?**
 
 **Purpose:**
-- Surface **scalability tradeoffs** in decentralized routing.
+- Reveal the need for a decentralized topology discovery mechanism.
+- Motivate the gossip protocol.
 
 **Example of Good Expected Answer:**
-> As the network grows, the number of nodes and channels increases, making it harder for individual nodes to maintain an accurate and up-to-date view of the network. Pathfinding becomes computationally heavier, and failures due to liquidity uncertainty become more common. Some proposals aim to reduce this burden by introducing techniques like route hints, trampoline routing, or even partial delegation of routing, but these raise their own privacy and trust tradeoffs.
+> Alice learns about public channels through the gossip protocol.
+> Nodes in the Lightning Network propagate information about which channels exist, who’s involved, what fees are charged, and what timelocks are required.
+> This allows each node to build a local view of the network graph and use it to compute routes.
+> No central directory exists — each node relies on what others choose to announce.
 
-### Question 4
-> **What new technologies or protocol upgrades are being explored to improve Lightning's privacy and efficiency?**
+## Question 2
+> **Let’s say Alice learns that Bob has a channel with Carol.
+> She doesn’t know the current balance in that channel.
+> Why not? And why is this both a design feature and a limitation?**
 
 **Purpose:**
-- Show students the **living nature of protocol evolution**.
+- Make students confront the tradeoff between privacy and liquidity transparency.
+- Expose the unpredictability of available paths.
 
 **Example of Good Expected Answer:**
-> Several new technologies are being researched and developed. These include PTLCs (Point Time Locked Contracts) for more flexible and private conditional payments, blinded paths to protect receiver identity, and more sophisticated onion routing schemes. Some proposals like rendezvous routing and trampoline routing aim to make routing more robust and private. Each innovation seeks to address current shortcomings without sacrificing Bitcoin's core principles.
+> Lightning channels are private contracts — their current balances are not publicly known.
+> This protects users’ privacy, but it also means Alice doesn’t know if Bob has enough liquidity to forward the payment.
+> Every node must guess which channels are viable, often based on past experience or probing.
+> This makes routing uncertain — a path might exist but still fail due to insufficient funds.
 
-### Question 5
-> **If you could design one improvement for the Lightning Network, based on what you've learned, what would it be?**
+## Question 3
+> **Imagine routing worked like on the internet: each hop decides where to send the packet next.
+> Why doesn’t Lightning use this approach? Why is the sender responsible for building the entire route ahead of time?**
 
 **Purpose:**
-- Encourage students to **synthesize knowledge**, **think creatively**, and **engage as future contributors**.
+- Highlight the contrast between best-effort IP routing and Lightning's need for strict, atomic coordination.
+- Reinforce the design constraints of privacy and security.
 
 **Example of Good Expected Answer:**
-> (Open-ended — mentors should encourage any thoughtful response.)
-> A good answer would demonstrate understanding of Lightning’s real challenges — for example, proposing better liquidity discovery without compromising privacy, enhancing mobile node support, creating safer backup protocols, or optimizing routing under uncertain liquidity conditions. The key is showing awareness of tradeoffs and technical grounding in the proposal.
+> In Lightning, each payment must either succeed end-to-end or fail completely — partial forwarding makes no sense.
+> This requires atomic coordination across all hops.
+> Only the sender knows the final destination and payment details.
+> If hops could choose the next forwarder, they could leak or manipulate the payment path, violating privacy or correctness.
+> So the sender constructs the entire route and encrypts instructions for each hop using onion routing.
+
+## Question 4
+> **Suppose Alice chooses a route but the payment fails mid-way — for example, because Bob doesn't have enough liquidity.
+> What can she do to recover? Can she try again? How would she choose a better route?**
+
+**Purpose:**
+- Explore the concept of retries and adaptive routing.
+- Introduce liquidity estimation heuristics.
+
+**Example of Good Expected Answer:**
+> Alice can retry the payment with a different route.
+> Over time, her node might learn that some channels are unreliable or too small.
+> Implementations use heuristics — like penalizing failed channels — or probing techniques to estimate available liquidity.
+> But there's no perfect information.
+> Retrying introduces delay and can reduce privacy if too many attempts are made.
+
+## Question 5
+> **To improve reliability, Lightning supports multi-path payments (MPP): splitting the payment into parts sent over different routes.
+> What are the advantages and risks of this strategy? Why might a node choose to use it — or avoid it?**
+
+**Purpose:**
+- Encourage reasoning about real-world tradeoffs in protocol extensions.
+- Highlight ongoing design work in the ecosystem.
+
+**Example of Good Expected Answer:**
+> MPP lets a sender combine liquidity from multiple smaller channels, increasing the chance of success.
+> It also makes large payments more feasible.
+> But it adds complexity — all parts must arrive in time and be locked atomically.
+> Partial failure increases coordination risk.
+> Some nodes might avoid MPP to keep things simpler or avoid privacy leaks from splitting paths.
+
+## Question 6
+> **Let’s say you want to design a better routing algorithm for your Lightning node.
+> What kinds of data would you wish you had access to?
+> Why can’t you access all of it? What would you prioritize in your design?**
+
+**Purpose:**
+- Invite students to synthesize what they’ve learned and imagine real improvements.
+- Close the seminar with forward-looking thinking.
+
+**Example of Good Expected Answer:**
+> Ideally, I’d want to know each channel’s current balance, uptime, and past performance.
+> But this data is either private or unavailable due to the decentralized design.
+> I’d have to work with gossip data, failed payment history, and optional probing results.
+> My priorities might depend on the context: minimize fees, maximize privacy, or prioritize reliability.
+> Any routing algorithm must balance incomplete information, strategic behavior by peers, and user goals.

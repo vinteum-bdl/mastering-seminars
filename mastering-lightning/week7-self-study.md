@@ -1,39 +1,53 @@
-## Week 7 — Challenges and Future Directions for Lightning
+# 📚 Week 7 — Pathfinding, Gossip, and Liquidity
 
-### 🔹 1. Introduction
+We now understand how to build secure payment channels, how to route payments across independent channels using HTLCs, and how onion routing helps preserve privacy.
 
-_This week we step back and look at the Lightning Network as an evolving project. We'll explore its current challenges, limitations, and the research directions that aim to improve its usability, security, scalability, and privacy._
+But we’ve mostly taken one thing for granted: How does Alice even know that Bob has a channel to Carol?
+And how does she know how much liquidity Bob has in that channel — or which paths are viable to begin with?
 
-_Focus on understanding that Lightning is still growing — and that you, as a future contributor, can help shape its path!_
+This week, we explore the network-level infrastructure that makes Lightning routing possible:
+- How peers learn about the existence of channels;
+- How they discover public node identities, channel balances, and fee policies;
+- How pathfinding is performed — and what makes it so different from routing on the internet.
+
+Unlike IP routing, which uses best-effort hop-by-hop forwarding, Lightning uses source routing:
+The sender must learn enough about the network to construct the entire path in advance — a nontrivial task in a decentralized, liquidity-constrained, privacy-conscious environment.
+
+This week, we’ll dive into:
+- The gossip protocol used to spread information about the network topology;
+- The limitations of this approach (especially around private channels and liquidity);
+- The heuristics used by Lightning implementations to choose routes;
+- The tensions between privacy, reliability, and discoverability.
+This is a great opportunity to reflect on Lightning not just as a set of contracts and scripts, but as a living, dynamic, global network that must balance coordination, efficiency, and user autonomy.
 
 ---
 
-### 📙 2. Core Reading Assignment
+## 📙 Core Reading Assignment
 
-- **Chapter 15**: Lightning Payment Requests
-- **Chapter 16**: Security and Privacy of the Lightning Network
-
----
-
-### 📈 3. Optional Reading Assignment
-
-- Explore research papers and BOLTs on emerging ideas like PTLCs (Point Time Locked Contracts), blinded paths, trampoline routing, and liquidity marketplaces if you are curious about cutting-edge developments.
+1. Antonopoulos et al, Mastering the Lightning Network — Chapter 5: Routing
+- Focus on sections: Gossip Protocol, Route Finding, and Channel Liquidity
 
 ---
 
-### 🔍 4. Self-Study Questions
+## 📈 Optional Reading Assignment
 
-#### Chapter 15: Lightning Payment Requests
+- Rene Pickhardt and Stefan Richter, [Optimally Reliable & Cheap Payment Flows on the Lightning Network](https://arxiv.org/abs/2107.05322)
 
-1. **Why can't Lightning use static payment addresses like Bitcoin does? Why are invoices necessary?**
-2. **What risks arise if a user attempts to reuse a Lightning invoice? How does this differ from address reuse in Bitcoin?**
+---
 
-#### Chapter 16: Security and Privacy of the Lightning Network
-
-1. **What does it mean to "de-anonymize" a Lightning user? What factors influence the size of the anonymity set?**
-2. **How does Lightning improve over Bitcoin in terms of privacy? In what ways might it still fall short?**
-3. **What kinds of attacks are possible in the Lightning Network? Can any of them result in theft of funds?**
-
-#### Final Reflection
-
-4. **If you could design one improvement for the Lightning Network, based on what you have learned, what would it be? What tradeoffs might it involve?**
+## 🔍 Self-Study Questions
+1. What information about Lightning channels is publicly advertised on the network?
+2. What is the gossip protocol, and how does it help peers build a map of the network?
+3. What are the limitations of the gossip model? What kinds of information does it not reveal?
+4. What is the difference between public and private channels? How does that distinction affect routing and discoverability?
+5. How do routing nodes decide what fee policies to advertise? What role do these play in pathfinding?
+6. Why must Lightning use source routing instead of hop-by-hop forwarding like in IP networks?
+7. What does it mean that the sender is responsible for choosing the entire payment route?
+8. Why is the current balance of a channel not known to the rest of the network? How does this affect route selection?
+9. What kinds of failures can occur when attempting a multi-hop payment? What mechanisms exist to retry or adjust the route?
+10. What is probing in the context of routing? How is it used to estimate liquidity — and how might it violate privacy?
+11. What is a multi-path payment (MPP)? Why might a sender use this technique?
+12. What are the tradeoffs involved in route selection: cost, privacy, success probability, and speed?
+13. How do Lightning implementations like LND and CLN attempt to guess which channels have sufficient liquidity?
+14. What are the main ideas behind Pickhardt Payments? How do they improve upon the default routing heuristics?
+15. If you were to design your own Lightning routing algorithm, what data would you wish you had access to? What tradeoffs would you face?
