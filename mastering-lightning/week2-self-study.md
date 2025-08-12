@@ -12,7 +12,7 @@ To spend a UTXO, a new transaction must include a reference to it (`txid` and `i
 This data often includes a digital signature and other information, such as a public key or a preimage.
 
 In the standard Bitcoin payment flow, valid transactions are eventually confirmed by being included in a block.
-Each must include fees to incentivize miners to confirm them.
+Each transaction must include fees to incentivize miners to confirm them.
 This introduces costs in terms of:
 
 - Throughput: limited number of transactions per block;
@@ -67,6 +67,8 @@ This week we are not intereted in how the channel state is updated.
 
 - [Lightning transactions: from Zero to Hero](https://github.com/t-bast/lightning-docs/blob/master/lightning-txs.md)
 
+- [BOLT 3: Bitcoin Transaction and Script Formats](https://github.com/lightning/bolts/blob/master/03-transactions.md) - Try to get a feel for how the scripts are used, don't bother understanding all the nitty-gritty.
+
 ---
 
 ### 🔍 Self-Study Questions
@@ -85,7 +87,7 @@ This week we are not intereted in how the channel state is updated.
 12. What is a "dual-funded channel," and what is its current status in Lightning implementations?
 13. Explain the purpose of "commitment transactions" in managing the channel balance off-chain.
 14. Describe the ways a payment channel can be closed. Which is preferred, and why might the others be necessary?
-15. What are the implications and costs of a "force close" compared to a "mutual close"?
+15. What are the implications and costs of a "force close" compared to a "collaborative close"?
 16. Ideally, you only see two on-chain transactions over the lifetime of a payment channel, one to open the channel and one to close it. How does this reflect the efficiency goal of payment channels?
 
 When answering these questions, focus on how to construct valid Bitcoin transactions and which information is needed by each party.

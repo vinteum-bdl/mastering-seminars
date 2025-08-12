@@ -2,7 +2,7 @@
 
 Bitcoin transactions can be understood as a language for expressing financial contracts.
 Each transaction encodes claims about ownership and the conditions under which ownership can change.
-This language is composed of inputs and outputs, scripts and signatures — all of which express and enforce the rules of who can spend what, and how.
+This language is composed of inputs and outputs, scripts and signatures — all of which express and enforce the rules of who can spend what, when and how.
 
 By learning to speak this language, we gain the tools to talk about more complex constructions, like the Lightning Network, using the vocabulary of Bitcoin itself.
 Our goal is to build a habit of reasoning in terms of Bitcoin primitives — not metaphors, not abstractions from other domains — so that we can understand Lightning as a coordination protocol grounded in Bitcoin’s transaction structure.

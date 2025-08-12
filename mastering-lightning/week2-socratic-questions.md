@@ -1,7 +1,7 @@
 # 📚 Week 2 – Lightning Channels as Systems of Bitcoin Transactions
 
 This week we are focusing on opening and closing payment channels.
-In asnwering the following questions, focus on the Bitcoin transactions Alice and 
+In answering the following questions, focus on the Bitcoin transactions Alice and 
 Bob would have to build and what should they do to them (propagate to the network or keep off-chain on their private records).
 Try to build the simplest solution to solve the most immediate problem posed.
 There is no need for revocation keys or HTLCs for now, these are important security mechanisms we will introduce once we analyze the problems that arise from using the primitives we will build here.
@@ -33,7 +33,7 @@ Example of Good Expected Answer:
 > Can Bob recover his funds from the payment channel?**
 
 **Purpose:**
-- Lead students to realize the need for safe exists.
+- Lead students to realize the need for safe exits.
 - Make students think about what can go wrong at all times an action is performed.
 
 **Example of Good Expected Answer:**
@@ -44,7 +44,7 @@ Example of Good Expected Answer:
 
 ### Question 3
 
-> Let's solve that by creating another transaction to allow for Alice and Bob to recover their funds in the case the other party becomes unresponsive.
+> Let's solve that by creating another transaction that allows Alice and Bob to recover their funds in the case the other party becomes unresponsive.
 > What kind of Bitcoin transaction do they need to build?
 
 **Purpose:**

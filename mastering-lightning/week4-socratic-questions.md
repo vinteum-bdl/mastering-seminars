@@ -1,6 +1,6 @@
 # 📚 Week 4 - Cheating with Valid Transactions and the Need for Revocation Keys
 
-Let’s what we are doing:
+Let’s recap what we are doing:
 Alice and Bob opened a payment channel.
 Alice contributed to the channel with a 1000 sats UTXO and Bob with a 2000 sats UTXO.
 They built a funding transaction that spends each party's UTXO and locks the 3000 sats into a single output with a 2-of-2 multisig contract.
@@ -78,8 +78,7 @@ Forget about HTLCs, though, they are not needed now.
 **Example of Good Expected Answer:**
 > **The revocation key is a public key that’s derived from secrets known only by the counterparty after a state is revoked.
 > It’s constructed using two keys:
-> A per-commitment point (unique to that channel state), and
-> A base revocation base key (constant across the channel).
+> A per-commitment point (unique to that channel state), and a base revocation key (constant across the channel).
 > The actual revocation public key is derived from a formula using both.
 > Only when the per-commitment secret is revealed (during a state update), the counterparty can compute the private key corresponding to the revocation pubkey.
 > Until then, it’s just an unusable public key — the broadcaster cannot spend it.**

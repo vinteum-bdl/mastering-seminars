@@ -59,7 +59,7 @@ On the first reading, note that all they are talking about are Bitcoin transacti
 1. What are the parts of a Bitcoin transaction?
 2. What's an UTXO? Why it's fundamental to Bitcoin's model?
 3. Describe locking and unlocking scripts and explain their role within Bitcoin transactions.
-4. Suppose someone created a transaction with a 1 BTYC output locked by a p2pkh constract. Who's the owner of this 1 BTC? What data he must present to spend his 1 BTC?
+4. Suppose someone created a transaction with a 1 BTC output locked by a p2pkh contract. Who's the owner of this 1 BTC? What data he must present to spend his 1 BTC?
 4. Describe a 2-of-2 multisig contract (locking script) using Bitcoin Script. Describe the spending script for this contract.
 5. How can an UTXO be locked to a secret? Why are cryptographic hashes used for this technique?
 6. What kinds of time locking mechanisms exist (absolute and relative) and how are they used?

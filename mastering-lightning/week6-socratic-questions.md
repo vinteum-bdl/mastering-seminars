@@ -17,7 +17,7 @@ We'll begin with a simple multi-hop scenario and work our way toward understandi
 - Set up the motivation for onion routing.
 
 **Example of Good Expected Answer:**
-> In a naïve implementation, Bob sees both Alice (the previous hop) and Carol (the next hop), as well as the payment amount and the hash preimage condition.
+> In a naive implementation, Bob sees both Alice (the previous hop) and Carol (the next hop), as well as the payment amount and the hash preimage condition.
 > He can infer that Carol is likely the final recipient — especially if he doesn't know of further connections.
 > Alice’s identity is also visible to him.
 > This creates a privacy risk for both sender and recipient.

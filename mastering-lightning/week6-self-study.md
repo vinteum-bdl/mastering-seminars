@@ -29,7 +29,7 @@ By the end of this week, you should be able to reason about the threat model of 
 
 ## 📈 Optional Reading Assignment
 
-- BOLT 4 — Onion Routing Protocol
+- [BOLT 4](https://github.com/lightning/bolts/blob/master/04-onion-routing.md) — Onion Routing Protocol
 
 ---
 

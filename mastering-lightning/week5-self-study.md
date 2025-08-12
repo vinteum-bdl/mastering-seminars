@@ -45,7 +45,7 @@ We don’t need to trust intermediaries, because intermediaries are held cryptog
 ## 📈 Optional Reading Assignment
 - Lightning Labs, [The Builder's Guide to the LND Galaxy!](https://docs.lightning.engineering)
 - Christian Decker, [Lightning ≈ Bitcoin](https://youtu.be/8lMLo-7yF5k?si=rTGo0vMUeBVTHexM)
-- BOLT 2 and BOLT 4 (skim for real-world implementation detail)
+- [BOLT 2](https://github.com/lightning/bolts/blob/master/02-peer-protocol.md) and [BOLT 4](https://github.com/lightning/bolts/blob/master/04-onion-routing.md) (skim for real-world implementation detail)
 
 ---
 

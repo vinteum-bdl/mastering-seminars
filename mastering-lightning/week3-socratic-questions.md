@@ -47,7 +47,7 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 ### Question 3
 > **Our protocol has a serious flaw: Alice can use an old, more favorable, channel state to steal funds from her channel counterparty.
 > Part of the problem is that Alice can use the commitment transaction to immediately receive funds from the shared UTXO.
-> How can we use timelocks in the commitment transaction to ensure she has to wait for some time (say, 2 three days) to claim her funds from the channel?
+> How can we use timelocks in the commitment transaction to ensure she has to wait for some time (say, two or  three days) to claim her funds from the channel?
 > Describe what has to change in the commitment transaction they are going to build and pre-sign.
 > Is that sufficient to stop the stealing from Alice?**
 
@@ -87,12 +87,12 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 
 **Example of Good Expected Answer:**
 > Alice and Bob must each hold different versions of the commitment transaction.
-> Alice’s version pays her immediately and delays Bob’s output; Bob’s version does the opposite.
+> Alice's version pays Bob immediately and delays her own output; Bob’s version does the opposite.
 > This ensures that if either party tries to cheat, the counterparty has both time and the ability to claim the funds through the punishment mechanism.
 > The asymmetry is essential to prevent mutual exploitation while still allowing unilateral closure.
 
 ### Question 6
-> **The commitment transaction has two outputs, the first belonging to Alice and the seconds belonging to Bob.
+> **The commitment transaction has two outputs, the first belonging to Alice and the second belonging to Bob.
 > In Questions 3 and 4, we were trying to prevent Alice from stealing Bob by propagating an old channel state.
 > For that, we modified only Alice's output.
 > Why we didn't need to change Bob's output at all, at that point?**
@@ -104,7 +104,7 @@ We don't need revocation keys or HTLCs for now; they’ll appear next week.
 **Example of Good Expected Answer:**
 > When Alice propagated her version of the commitment transaction, she is effectively making two payments.
 > One of the outputs pays to her 1000 sats, of which 100 belong to Bob.
-> So, we have to modify this output so that Alice can't that what's not hers.
+> So, we have to modify this output so that Alice can't take what's not hers.
 > The second output pays 2000 sats to Bob, not to Alice.
 > And since these 2000 sats indeed belong to Bob, they are being paid to their rightfull owner and nothing has to be done about it.
 
